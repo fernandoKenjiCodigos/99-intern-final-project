@@ -14,6 +14,7 @@ export const SEGMENTS = {
     accent: 'dark',
     creativeKey: 'popup-churn',
     creativeFile: 'assets/popup-churn.webp',
+    foodFile: 'assets/chega-junto-tela-churn-usuario.png',
     coupon: {
       kind: 'percent',
       value: 30,
@@ -31,6 +32,7 @@ export const SEGMENTS = {
     accent: 'yellow',
     creativeKey: 'popup-novo',
     creativeFile: 'assets/popup-novo.webp',
+    foodFile: 'assets/chega-junto-tela-novo-usuario.png',
     coupon: {
       kind: 'amount',
       value: 8,
@@ -64,17 +66,17 @@ export const ROUTE = {
   driver: { name: 'Marcos A.', rating: 4.9, car: 'Fiat Cronos · Prata', plate: 'FQZ-8C21' },
 };
 
-/** Tela do 99Food: uma imagem só. Os "+" são botões sobre ela, nas coordenadas em pixels da imagem. */
-export const FOOD_SCREEN = { file: 'assets/chega-junto-tela.png', width: 284, height: 777 };
+/** Dimensões em pixels das duas artes de 99Food (mesmo layout). Os "+" usam essas coordenadas. */
+export const FOOD_SCREEN = { width: 1080, height: 2895 };
 
-/** Pratos da imagem. `plus` é o centro do "+" amarelo, medido por análise de pixel. */
+/** Pratos da imagem. `plus` é o centro do "+" amarelo, em pixels da arte 1080×2895. */
 export const FOOD_ITEMS = [
-  { id: 'cheddar', name: 'Cheddar Jr.', brand: 'Burger King', price: 10.99, plus: { x: 71.5, y: 498.5 } },
-  { id: 'big-mac', name: 'Big Mac', brand: "McDonald's", price: 1.99, plus: { x: 165.5, y: 498.5 } },
-  { id: 'brabissimo', name: 'Brabíssimo 1 Carne', brand: "McDonald's", price: 26.9, plus: { x: 259.5, y: 498.5 } },
-  { id: 'kookaburra', name: 'Kookaburra Wings', brand: 'Outback', price: 19.99, plus: { x: 71.5, y: 708.5 } },
-  { id: 'sanduiche-pop', name: 'Sanduíche Pop Nola Rosé', brand: "McDonald's", price: 12.9, plus: { x: 165.5, y: 708.5 } },
-  { id: 'chicken-duplo', name: 'Chicken Duplo', brand: 'Burger King', price: 15.49, plus: { x: 259.5, y: 708.5 } },
+  { id: 'cheddar', name: 'Cheddar Jr.', brand: 'Burger King', price: 10.99, plus: { x: 284, y: 1846 } },
+  { id: 'big-mac', name: 'Big Mac', brand: "McDonald's", price: 1.99, plus: { x: 629, y: 1846 } },
+  { id: 'brabissimo', name: 'Brabíssimo 1 Carne', brand: "McDonald's", price: 26.9, plus: { x: 975, y: 1846 } },
+  { id: 'kookaburra', name: 'Kookaburra Wings', brand: 'Outback', price: 19.99, plus: { x: 284, y: 2618 } },
+  { id: 'sanduiche-pop', name: 'Sanduíche Pop Nola Rosé', brand: "McDonald's", price: 12.9, plus: { x: 629, y: 2618 } },
+  { id: 'chicken-duplo', name: 'Chicken Duplo', brand: 'Burger King', price: 15.49, plus: { x: 975, y: 2618 } },
 ];
 
 export const DELIVERY_FEE = 4.9;

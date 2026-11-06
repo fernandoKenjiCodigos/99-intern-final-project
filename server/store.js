@@ -185,7 +185,7 @@ export function listFoodItems(id) {
   const session = getSession(id);
   const coupon = SEGMENTS[session.segmentId].coupon;
   return {
-    screen: FOOD_SCREEN,
+    screen: { ...FOOD_SCREEN, file: SEGMENTS[session.segmentId].foodFile },
     items: FOOD_ITEMS.map((it) => ({
       id: it.id,
       name: it.name,

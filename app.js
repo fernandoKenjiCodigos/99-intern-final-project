@@ -16,7 +16,7 @@ const ICONS = {
 const el = (id) => document.getElementById(id);
 
 /** Lado, em pixels da imagem, da área clicável de cada "+". */
-const PLUS_HIT = 30;
+const PLUS_HIT = 90;
 
 const dom = {
   screen: el('screen'),
