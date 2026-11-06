@@ -1,0 +1,13 @@
+{
+  "name": "99-app-replica",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Réplica do fluxo Mobility -> Food da 99 (cross-user) com API local.",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js",
+    "test": "node --test test/api.test.js",
+    "test:e2e": "node test/e2e.mjs"
+  }
+}

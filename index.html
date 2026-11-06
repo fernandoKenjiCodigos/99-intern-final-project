@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>99 · Réplica Cross-User</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="stage">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">99</div>
+      <div>
+        <h1>99 · Réplica Cross-User</h1>
+        <p>API local + fluxo Mobility → Food</p>
+      </div>
+    </div>
+
+    <div class="side-section">
+      <h2>Segmento</h2>
+      <button class="seg-btn seg-novo" data-segment="novo">
+        <span class="seg-title">Novos usuários</span>
+        <span class="seg-sub">Nunca pediu food · R$ 8 OFF</span>
+      </button>
+      <button class="seg-btn seg-churn" data-segment="churn">
+        <span class="seg-title">Usuários churn</span>
+        <span class="seg-sub">30+ dias sem pedir · 30% OFF</span>
+      </button>
+    </div>
+
+    <div class="side-section">
+      <h2>Estado da sessão</h2>
+      <ol class="timeline" id="timeline"></ol>
+    </div>
+
+    <div class="side-section">
+      <h2>API</h2>
+      <div class="api-row"><span>base</span><code id="apiBase">—</code></div>
+      <div class="api-row"><span>sessão</span><code id="apiSession">—</code></div>
+      <div class="api-row"><span>pop-up</span><code id="apiPopup">—</code></div>
+      <p class="side-hint">O relógio do pop-up roda no servidor em 2 s. O cliente só pergunta <code>/popup</code>.</p>
+    </div>
+
+    <button class="reset-btn" id="resetBtn" type="button">Reiniciar fluxo</button>
+  </aside>
+
+  <main class="phone-area">
+    <div class="phone">
+      <div class="notch" aria-hidden="true"></div>
+      <div class="screen" id="screen">
+
+        <!-- ============ HUB ============ -->
+        <section class="view" id="view-hub" data-view="hub">
+          <div class="hub-bg" aria-hidden="true">
+            <span class="road road-a"></span>
+            <span class="road road-b"></span>
+            <span class="road road-c"></span>
+          </div>
+          <div class="hub-content">
+            <div class="hub-top">
+              <span class="hub-greet">Olá, Fernando</span>
+              <span class="hub-loc">Alameda Itu, 395</span>
+            </div>
+
+            <div class="hub-title">
+              <h2>Como quer aproveitar a 99 hoje?</h2>
+              <p>Escolha um perfil para rodar o processo.</p>
+            </div>
+
+            <button class="hub-card hub-card--churn" data-segment="churn" type="button">
+              <div class="hub-card-icon">🧲</div>
+              <div class="hub-card-body">
+                <strong>Usuários churn</strong>
+                <span>Já pediu food, mas está 30+ dias sem pedir</span>
+                <em>Cupom 30% OFF para voltar</em>
+              </div>
+              <svg class="hub-card-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+
+            <button class="hub-card hub-card--novo" data-segment="novo" type="button">
+              <div class="hub-card-icon">✨</div>
+              <div class="hub-card-body">
+                <strong>Novos usuários</strong>
+                <span>Nunca pediu no 99Food</span>
+                <em>R$ 8 OFF no primeiro pedido</em>
+              </div>
+              <svg class="hub-card-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+
+            <div class="hub-foot">
+              <div class="hub-tab on"><span>🚗</span>Corrida</div>
+              <div class="hub-tab"><span>🍔</span>Food</div>
+              <div class="hub-tab"><span>👛</span>Carteira</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ TELA 1 · seleção de corrida ============ -->
+        <section class="view" id="view-ride" data-view="ride-select" hidden>
+          <div class="ride-header">
+            <button class="icon-btn" id="rideBack" type="button" aria-label="Voltar">
+              <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+            </button>
+            <div class="route-line">
+              <div class="route-point route-from"><span class="dot dot-blue"></span>
+                <div><strong id="routePickup">Alameda Itu, 395</strong><small id="routePickupNote">Básico Materiais Para constr…</small></div>
+              </div>
+              <div class="route-point route-to"><span class="dot dot-dark"></span>
+                <div><strong id="routeDest">Eldo Trade Center</strong><small id="routeDestNote">Liberdade</small></div>
+              </div>
+            </div>
+            <button class="link-btn" type="button">Alterar</button>
+          </div>
+
+          <div class="map" aria-hidden="true">
+            <svg class="map-svg" viewBox="0 0 320 150" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="routeGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#2F80ED"/>
+                  <stop offset="100%" stop-color="#1B4FA8"/>
+                </linearGradient>
+              </defs>
+              <path class="map-road" d="M-10 118 L70 104 L128 96 L196 84 L250 62 L330 44"/>
+              <path class="map-road" d="M40 -10 L58 46 L86 96 L112 150"/>
+              <path class="map-road" d="M210 -10 L206 40 L196 84 L176 150"/>
+              <path class="map-road" d="M-10 52 L86 34 L152 26 L240 12 L330 -4"/>
+              <path class="map-route" d="M26 118 C70 112 96 104 128 96 C168 86 200 78 232 62 C258 50 276 46 296 40"/>
+              <circle cx="26" cy="118" r="6" fill="#fff" stroke="#2F80ED" stroke-width="3.5"/>
+              <circle cx="296" cy="40" r="6" fill="#1A1A1A" stroke="#fff" stroke-width="3.5"/>
+            </svg>
+            <div class="map-card">
+              <strong id="mapEta">15:04</strong>
+              <small id="mapKm">(10,7 km)</small>
+            </div>
+            <div class="map-labels">
+              <span style="left:6%;top:58%">VILA SÔNIA</span>
+              <span style="left:63%;top:44%">Eldo Trade</span>
+              <span style="left:63%;top:52%">Center</span>
+              <span style="left:44%;top:88%">Liberdade</span>
+            </div>
+          </div>
+
+          <div class="savings"><span class="savings-dot">%</span>Economize até R$ 8,00 nesta corrida</div>
+
+          <div class="options" id="optionsList" role="listbox" aria-label="Opções de corrida"></div>
+
+          <div class="ride-foot">
+            <div class="foot-row">
+              <span class="foot-pay">💵 Dinheiro e Desconto</span>
+              <button class="link-btn" type="button">Mudar o passageiro</button>
+            </div>
+            <button class="confirm-btn" id="confirmBtn" type="button" disabled>
+              <span>Confirmar</span>
+              <small id="confirmSummary">Selecione uma opção</small>
+            </button>
+          </div>
+        </section>
+
+        <!-- ============ TELA 2 · acompanhamento ============ -->
+        <section class="view" id="view-track" data-view="tracking" hidden>
+          <div class="track-map">
+            <svg class="map-svg" viewBox="0 0 320 260" preserveAspectRatio="none">
+              <path class="map-road" d="M-10 200 L80 176 L160 158 L250 128 L330 106"/>
+              <path class="map-road" d="M40 -10 L58 60 L86 138 L112 260"/>
+              <path class="map-road" d="M230 -10 L220 60 L206 140 L190 260"/>
+              <path class="map-route" d="M34 214 C86 196 122 180 160 158 C206 132 248 116 292 98"/>
+              <circle cx="34" cy="214" r="7" fill="#fff" stroke="#2F80ED" stroke-width="3.5"/>
+              <circle cx="292" cy="98" r="7" fill="#1A1A1A" stroke="#fff" stroke-width="3.5"/>
+            </svg>
+            <button class="icon-btn track-close" id="trackBack" type="button" aria-label="Voltar">
+              <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+            </button>
+            <div class="track-chip">
+              <strong id="trackTitle">15:04</strong>
+              <small id="trackSub">(10,7 km)</small>
+            </div>
+          </div>
+
+          <div class="track-sheet">
+            <div class="track-grip" aria-hidden="true"></div>
+            <div class="track-status">
+              <span class="pulse" aria-hidden="true"></span>
+              <div>
+                <strong>Procurando motorista…</strong>
+                <small>Vamos te avisar assim que alguém aceitar</small>
+              </div>
+            </div>
+
+            <div class="driver-card">
+              <div class="driver-avatar">MA</div>
+              <div class="driver-body">
+                <strong id="driverName">Marcos A. <span>★ 4,9</span></strong>
+                <small id="driverCar">Fiat Cronos · Prata</small>
+                <code id="driverPlate">FQZ-8C21</code>
+              </div>
+              <div class="driver-actions">
+                <button type="button" aria-label="Ligar">📞</button>
+                <button type="button" aria-label="Mensagem">💬</button>
+              </div>
+            </div>
+
+            <div class="track-summary" id="trackSummary"></div>
+
+            <div class="track-food" id="trackFoodCard" role="button" tabindex="0"
+                 aria-label="Abrir o 99Food">
+              <div class="track-food-icon">🍔</div>
+              <div>
+                <strong>Aproveite: o 99Food está por aqui</strong>
+                <small id="trackPopupHint">Um aviso vai aparecer em instantes…</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ TELA 3 · 99Food ============ -->
+        <section class="view" id="view-food" data-view="food" hidden>
+          <div class="food-scroll">
+            <div class="food-screen">
+              <img id="foodImg" alt="Cardápio 99Food">
+              <div class="food-plus-layer" id="foodPlusLayer"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ OVERLAY POP-UP ============ -->
+        <div class="overlay" id="overlay" hidden>
+          <div class="pop" role="dialog" aria-modal="true" aria-label="Oferta 99Food">
+            <img id="popupImg" src="" alt="Oferta 99Food">
+            <button class="pop-hotspot pop-x" id="popupClose" type="button" aria-label="Fechar pop-up"></button>
+            <button class="pop-hotspot pop-cta" id="popupCta" type="button"
+                    aria-label="Pedir no 99Food agora"></button>
+          </div>
+        </div>
+
+        <!-- ============ OVERLAY PEDIDO CONFIRMADO ============ -->
+        <div class="overlay overlay--confirmed" id="orderOverlay" hidden>
+          <div class="confirm-sheet" role="dialog" aria-modal="true" aria-label="Pedido confirmado">
+            <div class="confirm-check" aria-hidden="true">
+              <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M16 27l7 7 13-14"/></svg>
+            </div>
+            <h2>Pedido confirmado!</h2>
+            <p id="confirmedRestaurant">Pizza Express</p>
+            <div class="receipt" id="receipt"></div>
+            <button class="confirm-btn confirm-btn--sheet" id="orderDone" type="button">
+              <span>Voltar ao início</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="toast" id="toast" hidden></div>
+      </div>
+    </div>
+    <p class="phone-caption">Réplica visual para demonstração. Sem afiliação oficial com a 99.</p>
+  </main>
+
+</div>
+
+<script src="app.js" type="module"></script>
+</body>
+</html>
