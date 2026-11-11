@@ -1,6 +1,6 @@
 # 99 · Réplica Cross-User
 
-Réplica do processo Mobility → Food da 99, com API local. Zero dependências:
+Réplica do processo Mobility → Food da 99, com API local. Utilizado no projeto final do programa de estágio 99.  Zero dependências:
 só `node:http`, `node:fs` e módulos nativos.
 
 ```bash
